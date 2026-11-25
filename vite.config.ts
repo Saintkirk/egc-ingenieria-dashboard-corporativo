@@ -176,7 +176,7 @@ const HTML_INPUTS = Object.fromEntries(
     .filter((file) => file.endsWith(".html"))
     .map((file) => [file.replace(/\.html$/, ""), path.resolve(CLIENT_ROOT, file)]),
 );
-const GITHUB_PAGES_BASE = "/egc-ingenieria-dashboard-precision-dark/";
+const GITHUB_PAGES_BASE = "/egc-ingenieria-dashboard-corporativo/";
 
 export default defineConfig({
   plugins,
