@@ -548,3 +548,55 @@ tr.clic:hover td { background: #f5f6fc; }
   .mov.mov-workspace { width: 100%; }
   .mov-workspace .cuerpo { padding-inline: 15px; }
 }
+
+/* Espacios de trabajo desktop para Terreno y Dibujante */
+.work-app .content { max-width: 1320px; }
+.work-hero {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 8px 0 26px;
+  border-bottom: 1px solid var(--egc-line);
+}
+.work-hero .eyebrow {
+  margin: 0 0 8px;
+  color: var(--egc-red);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.work-hero h2 {
+  margin: 0;
+  color: var(--egc-navy);
+  font-family: "Montserrat", Arial, sans-serif;
+  font-size: clamp(25px, 3vw, 38px);
+  letter-spacing: -.045em;
+}
+.work-hero p:not(.eyebrow) { max-width: 720px; margin: 10px 0 0; color: var(--egc-gray); line-height: 1.6; }
+.role-badge {
+  flex: 0 0 auto;
+  padding: 8px 12px;
+  border: 1px solid #c8cce1;
+  border-radius: 999px;
+  background: #eef0fb;
+  color: var(--egc-blue);
+  font-size: 12px;
+  font-weight: 800;
+}
+.work-guidance { margin: 24px 0; border-left: 4px solid var(--egc-blue); background: #f7f8fc; }
+.work-guidance p { margin-bottom: 0; line-height: 1.55; }
+.work-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px; }
+.work-list > .card { min-height: 190px; border-color: var(--egc-line); background: #fff; box-shadow: 0 8px 22px rgba(3, 12, 16, .06); }
+.work-list > .card:hover { border-color: #b8bfdc; box-shadow: 0 12px 26px rgba(12, 28, 140, .09); }
+.work-list .card-heading { display: flex; align-items: center; flex-wrap: wrap; gap: 9px; color: var(--egc-navy); font-family: "Montserrat", Arial, sans-serif; font-size: 16px; }
+.work-list .card-heading .chip { margin: 0; }
+.work-list [data-sitio] > p { color: #6b6f75; line-height: 1.55; }
+.work-list .card-actions { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: 10px; margin-top: 18px; }
+.work-list .card-actions .btn { width: 100%; margin-top: 0; min-height: 46px; }
+@media (max-width: 700px) {
+  .work-hero { align-items: flex-start; flex-direction: column; padding-bottom: 20px; }
+  .work-list { grid-template-columns: 1fr; }
+  .work-list .card-actions { grid-template-columns: 1fr; }
+}
