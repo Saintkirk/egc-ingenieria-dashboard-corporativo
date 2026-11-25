@@ -55,7 +55,7 @@ export const PANTALLAS = {
 // Menú de las páginas públicas (índice e ingreso)
 export const MENU_PUBLICO = [{
   id: 'prototipo', titulo: 'Prototipo', icono: 'grid',
-  links: [['login.html', 'Inicio de sesión', 'panel'], ['index.html', 'Índice de vistas', 'sites']]
+  links: [['login.html', 'Inicio de sesión', 'panel']]
 }];
 
 const leerRol = () => { try { return localStorage.getItem(CLAVE_ROL); } catch { return null; } };
