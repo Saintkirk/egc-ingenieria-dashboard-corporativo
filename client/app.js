@@ -8,6 +8,7 @@ import { initLoginFlow } from './js/login-flow.js';
 import { resolverSesion, ROLES, urlPara } from './js/roles.js';
 import { mostrarAccesoDenegado } from './js/ui.js';
 import { reiniciarDemo } from './js/store.js';
+import { initSectionMotion } from './js/section-motion.js';
 
 const currentRoute = location.pathname.split('/').pop() || 'index.html';
 
@@ -44,6 +45,7 @@ if (sesion.permitido) {
 }
 
 enhanceResponsiveTables();
+initSectionMotion();
 
 // 3. Herramienta de demostración: volver a los datos iniciales
 const botonReinicio = () => {
