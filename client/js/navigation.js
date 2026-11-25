@@ -37,7 +37,7 @@ export function initDesktopNav(currentRoute, rol = null) {
   // El encabezado muestra al usuario del rol activo (antes quedaba fijo en jefe@empresa.cl)
   const usuario = document.querySelector('.top .u');
   if (rol && usuario) {
-    usuario.innerHTML = `${ROLES[rol].correo} &nbsp;|&nbsp; <a href="login.html">Salir</a>`;
+    usuario.innerHTML = `<span class="user-email">${ROLES[rol].correo}</span><span class="user-divider" aria-hidden="true">|</span><a class="user-exit" href="login.html">Salir</a>`;
   }
 
   desktopSide.querySelectorAll('.nav-link[data-route]').forEach(a => {
