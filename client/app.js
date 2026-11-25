@@ -4,6 +4,7 @@ import { initReviewFlow } from './js/review-flow.js';
 import { initAsignacionFlow } from './js/asignacion-flow.js';
 import { initDetalleFlow } from './js/detalle-flow.js';
 import { initTerrenoFlow, initDibujanteFlow } from './js/mobile-flow.js';
+import { initLoginFlow } from './js/login-flow.js';
 import { resolverSesion, ROLES, urlPara } from './js/roles.js';
 import { mostrarAccesoDenegado } from './js/ui.js';
 import { reiniciarDemo } from './js/store.js';
@@ -12,6 +13,8 @@ const currentRoute = location.pathname.split('/').pop() || 'index.html';
 
 // 0. Sesión simulada y control de acceso por pantalla (equivale al 403 del backend)
 const sesion = resolverSesion(currentRoute);
+
+if (currentRoute === 'login.html') initLoginFlow();
 
 // 1. Capa de interfaz global (el menú depende del rol)
 initDesktopNav(currentRoute, sesion.rol);

@@ -10,6 +10,8 @@ const UI_VERSION = 'egc-20261125';
 export const ROLES = {
   jefe: {
     etiqueta: 'Jefe de área', correo: 'jefe@empresa.cl', identidad: 'Jefe de área', inicio: 'panel.html',
+    descripcion: 'Administra sitios, asignaciones y el avance completo de la operación.',
+    permisos: ['Crear asignaciones', 'Gestionar estados', 'Entregar y facturar'],
     grupos: [{
       id: 'operacion', titulo: 'Operación', icono: 'grid',
       links: [
@@ -22,14 +24,20 @@ export const ROLES = {
   },
   revisor: {
     etiqueta: 'Revisor', correo: 'revisor@empresa.cl', identidad: 'Revisor', inicio: 'revisor.html',
+    descripcion: 'Valida informes, croquis y antecedentes antes de pasar a dibujo.',
+    permisos: ['Revisar informes', 'Aprobar', 'Registrar observaciones'],
     grupos: [{ id: 'control', titulo: 'Control', icono: 'control', links: [['revisor.html', 'Revisión', 'review']] }]
   },
   terreno: {
     etiqueta: 'Terreno', correo: 'terreno.a@empresa.cl', identidad: 'Equipo A', inicio: 'terreno.html',
+    descripcion: 'Registra visitas y entrega la documentación levantada en terreno.',
+    permisos: ['Registrar visitas', 'Enlazar informes', 'Ver sitios de Equipo A'],
     grupos: [{ id: 'terreno', titulo: 'Mi trabajo', icono: 'grid', links: [['terreno.html', 'Mis visitas', 'sites']] }]
   },
   dibujante: {
     etiqueta: 'Dibujante', correo: 'dibujante2@empresa.cl', identidad: 'Dibujante 2', inicio: 'dibujante.html',
+    descripcion: 'Produce y entrega planos de los sitios asignados.',
+    permisos: ['Ver asignaciones propias', 'Enlazar planos', 'Ver detalle del sitio'],
     grupos: [{ id: 'dibujo', titulo: 'Mi trabajo', icono: 'grid', links: [['dibujante.html', 'Mis planos', 'plan']] }]
   }
 };

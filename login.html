@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0C1C8C">
   <title>Iniciar sesión · EGC Ingeniería</title>
-  <script type="module" crossorigin src="/egc-ingenieria-dashboard-precision-dark/assets/app-BQcTN45V.js"></script>
-  <link rel="stylesheet" crossorigin href="/egc-ingenieria-dashboard-precision-dark/assets/app-X7EwIpLe.css">
+  <script type="module" crossorigin src="/egc-ingenieria-dashboard-precision-dark/assets/app-DQBFb7Zj.js"></script>
+  <link rel="stylesheet" crossorigin href="/egc-ingenieria-dashboard-precision-dark/assets/app-B8O377z6.css">
 </head>
 <body>
   <div class="login">
@@ -32,24 +32,17 @@
 
     <main class="login-panel">
       <div class="login-box">
-        <h2>Iniciar sesión</h2>
-        <p>Acceso restringido a cuentas corporativas y contratistas autorizados (simulación de demostración).</p>
-
-        <a class="btn" href="panel.html?rol=jefe">Ingresar como Jefe de área</a>
-
-        <div class="warn">
-          Sesión simulada con fines de validación de flujo y roles. No se conectan credenciales reales.
+        <div class="login-heading">
+          <span class="login-kicker">Acceso a la plataforma</span>
+          <h2>Selecciona tu perfil</h2>
+          <p>Ingresa al espacio de trabajo que corresponde a tus responsabilidades en EGC Ingeniería.</p>
         </div>
 
-        <div class="demo-roles">
-          <strong>Accesos rápidos por rol</strong>
-          <div class="role-links">
-            <a href="panel.html?rol=jefe">Jefe de área (Panel)</a>
-            <a href="revisor.html?rol=revisor">Revisor</a>
-            <a href="terreno.html?rol=terreno">Terreno</a>
-            <a href="dibujante.html?rol=dibujante">Dibujante</a>
-          </div>
+        <div class="profile-grid" data-login-profiles aria-label="Perfiles disponibles">
+          <noscript>Activa JavaScript para ver los perfiles disponibles.</noscript>
         </div>
+
+        <p class="login-note"><b>Modo demostración:</b> no se solicitan credenciales reales. Cada perfil abre solo las pantallas y acciones que le corresponden.</p>
       </div>
     </main>
   </div>
