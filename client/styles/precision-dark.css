@@ -791,3 +791,29 @@ body :where(h1, h2, h3, h4, h5, h6, p, a, button, input, select, textarea, label
 @media (max-width: 900px) {
   .brand-mark { width: 154px; height: 46px; }
 }
+
+/* Cabecera del índice: misma marca y lenguaje visual, sin convertirlo en el shell del dashboard. */
+.prototype-index { min-height: 100vh; }
+.prototype-index .index-page { padding-top: 30px; }
+.prototype-index-brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 52px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--egc-line);
+}
+.prototype-index-brand a { display: inline-flex; align-items: center; }
+.prototype-index-brand img { display: block; width: 178px; height: 52px; object-fit: contain; }
+.prototype-index-brand span {
+  color: var(--egc-gray);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+@media (max-width: 639px) {
+  .prototype-index-brand { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
+  .prototype-index-brand img { width: 154px; height: 46px; }
+}
