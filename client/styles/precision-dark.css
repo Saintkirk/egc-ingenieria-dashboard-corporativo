@@ -641,7 +641,6 @@ tr.clic:hover td { background: #f5f6fc; }
   .profile-grid { grid-template-columns: 1fr; }
   .login-panel { padding: 30px 18px; }
 }
-
 /* Login · misma marca, tipografía y jerarquía visual del dashboard */
 .login,
 .login button,
@@ -661,3 +660,12 @@ tr.clic:hover td { background: #f5f6fc; }
   .login-logo { width: 150px; }
   .login-brand-label { padding-left: 12px; font-size: 11px; }
 }
+
+/* Login · acentos azules coherentes con navegación y estados del dashboard */
+.login-kicker,
+.profile-kicker,
+.login-brand-label em { color: var(--egc-blue); }
+.profile-card li::before { background: var(--egc-blue); }
+.login-heading h2 { color: var(--egc-navy); font-family: "Montserrat", Arial, sans-serif; font-weight: 800; }
+.login-story-copy h1 { color: var(--egc-navy); font-family: "Montserrat", Arial, sans-serif; font-weight: 800; }
+.login-story-copy p { color: var(--egc-gray); font-family: "Manrope", Arial, sans-serif; }
