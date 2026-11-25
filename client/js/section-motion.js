@@ -30,9 +30,9 @@ export function initSectionMotion() {
 
       const body = document.createElement('div');
       body.className = 'motion-section-body';
-      body.append(element);
       wrapper.append(toggle, body);
       main.replaceChild(wrapper, element);
+      body.append(element);
 
       toggle.addEventListener('click', () => {
         const open = toggle.getAttribute('aria-expanded') === 'true';
