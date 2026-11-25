@@ -427,3 +427,36 @@ tr.clic:hover td { background: #f5f6fc; }
 .mov .card, .mov form, .mov section { border-color: var(--egc-line); background: #fff; }
 .mobile-brand .brand-mark { width: 42px; height: 36px; }
 @media (max-width: 900px) { .side { background: #fff; border-bottom-color: var(--egc-line); } .content { padding: 24px 18px 38px; } }
+
+/* Última normalización corporativa: ningún panel funcional queda en negro */
+* { scrollbar-color: #aeb5d4 #f2f2f2; }
+::selection { background: var(--egc-blue); color: #fff; }
+.s8 { background: #e9ecfb; color: var(--egc-blue); border-color: #c8cce1; }
+.demo { background: #eef0fb; border-color: #c8cce1; color: var(--egc-blue); }
+.demo a { color: var(--egc-blue); }
+.login { background: linear-gradient(135deg, #f2f2f2, #eef1f8); }
+.login-story { background: linear-gradient(160deg, #eef0fb 0%, #fff 68%); color: var(--egc-navy); }
+.login-story::after { opacity: .14; filter: none; }
+.login-story h1 { color: var(--egc-navy); }
+.login-story p { color: var(--egc-gray); }
+.login-story-meta { color: #73777b; }
+.login-brand { color: var(--egc-blue); }
+.login-brand em { color: var(--egc-red); }
+.login-panel { background: rgba(255, 255, 255, .94); }
+.mov { background: #f2f2f2; }
+.mov .bar { background: #fff; color: var(--egc-navy); border-bottom: 1px solid var(--egc-line); box-shadow: 0 4px 14px rgba(3, 12, 16, .06); }
+.mov .bar small { color: var(--egc-gray); }
+.mov .bar small a { color: var(--egc-blue); }
+.mobile-brand em { color: var(--egc-red); }
+.mobile-menu-toggle { border-color: #b8bfdc; background: #eef0fb; color: var(--egc-blue); }
+.mobile-menu { background: #fff; border-bottom: 1px solid var(--egc-line); }
+.mobile-menu a { color: var(--egc-gray); }
+.mobile-menu a:hover, .mobile-menu a[aria-current="page"] { background: #eef0fb; color: var(--egc-blue); }
+.mobile-menu a[aria-current="page"] { box-shadow: inset 3px 0 var(--egc-red); }
+@media (max-width: 900px) {
+  .primary-nav-inner { background: #fff; border-top: 1px solid var(--egc-line); }
+}
+@media (max-width: 639px) {
+  table.res tr { background: #fff; border-color: var(--egc-line); }
+  table.res td::before { color: var(--egc-blue); }
+}
