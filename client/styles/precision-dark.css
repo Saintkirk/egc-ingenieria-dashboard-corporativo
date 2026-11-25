@@ -876,3 +876,18 @@ body :where(h1, h2, h3, h4, h5, h6, p, a, button, input, select, textarea, label
   text-align: center;
   white-space: normal;
 }
+
+/* En dibujo es producción, no alerta: el rojo queda reservado para riesgos y atrasos. */
+.chip.s5 {
+  background: #eee8ff;
+  color: #503389;
+  border-color: #d5c9f0;
+}
+.workflow-timeline li.is-active:not(:last-child)::after {
+  background: linear-gradient(90deg, #6d4bc2, #c8cce1);
+}
+.workflow-timeline li.is-active .workflow-dot {
+  background: #6d4bc2;
+  border-color: #5936a8;
+  box-shadow: 0 0 0 4px rgba(109, 75, 194, .14);
+}
