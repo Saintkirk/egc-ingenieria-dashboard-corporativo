@@ -13,13 +13,13 @@ function tarjeta(s, rol) {
     : '';
   const sinAccion = puede ? '' : `<p class="text-sm text-muted mt-1">${
     s.estado === 5 ? 'Plano enlazado. El jefe de área registra la entrega.' : 'En revisión: sin acciones pendientes para ti.'}</p>`;
+  const acciones = `<div class="card-actions">${puede ? `<button class="btn" type="button" data-accion="${siguiente.id}">${esc(siguiente.etiqueta)}</button>` : ''}<a class="btn g" href="${urlPara('detalle.html', rol, { sitio: s.id })}">Ver detalle</a></div>`;
   return `
       <article class="card" data-sitio="${esc(s.id)}">
-        <b>${esc(s.id)} · ${esc(s.nombre)}</b> ${chip(s.estado)}
+        <div class="card-heading"><b>${esc(s.id)} · ${esc(s.nombre)}</b>${chip(s.estado)}</div>
         <p class="text-sm text-muted mt-1">${metaHtml(s)}</p>
         ${nota}${sinAccion}
-        ${puede ? `<button class="btn" type="button" data-accion="${siguiente.id}">${esc(siguiente.etiqueta)}</button>` : ''}
-        <a class="btn g" href="${urlPara('detalle.html', rol, { sitio: s.id })}">Ver detalle</a>
+        ${acciones}
       </article>`;
 }
 

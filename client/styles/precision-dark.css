@@ -460,3 +460,72 @@ tr.clic:hover td { background: #f5f6fc; }
   table.res tr { background: #fff; border-color: var(--egc-line); }
   table.res td::before { color: var(--egc-blue); }
 }
+
+/* Dibujante · foco de trabajo y acciones cómodas */
+.mov {
+  max-width: 760px;
+  background: linear-gradient(180deg, #f7f8fc 0%, #f2f2f2 100%);
+  border-inline: 1px solid #e5e6ee;
+  box-shadow: 0 0 34px rgba(3, 12, 16, .05);
+}
+.mov .bar {
+  padding: 16px 24px;
+  min-height: 78px;
+  gap: 20px;
+}
+.mov .cuerpo {
+  padding: 34px 30px 76px;
+}
+.mov h2 {
+  color: var(--egc-navy);
+  font-family: "Montserrat", Arial, sans-serif;
+  font-size: clamp(24px, 3vw, 31px);
+  letter-spacing: -.04em;
+  margin-bottom: 18px;
+}
+.mov .cuerpo > .card:first-of-type {
+  background: #eef0fb;
+  border: 1px solid #d7daf0;
+  border-left: 4px solid var(--egc-blue);
+  border-radius: 6px;
+  padding: 17px 18px;
+  margin-bottom: 18px;
+}
+.mov .cuerpo > .card:first-of-type p { color: #57595c; line-height: 1.6; }
+.mov .lista-sitios {
+  display: grid;
+  gap: 16px;
+}
+.mov [data-sitio] {
+  background: #fff;
+  border: 1px solid #e0e1e7;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 8px 22px rgba(3, 12, 16, .07);
+}
+.mov [data-sitio]:hover { border-color: #b8bfdc; box-shadow: 0 12px 26px rgba(12, 28, 140, .09); }
+.mov .card-heading {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px;
+  color: var(--egc-navy);
+  font-family: "Montserrat", Arial, sans-serif;
+  font-size: 16px;
+}
+.mov .card-heading .chip { margin: 0; }
+.mov [data-sitio] > p { color: #6b6f75; line-height: 1.55; }
+.mov [data-sitio] .card-actions {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr);
+  gap: 10px;
+  margin-top: 18px;
+}
+.mov [data-sitio] .card-actions .btn { width: 100%; margin-top: 0; min-height: 46px; }
+@media (max-width: 639px) {
+  .mov { max-width: 100%; border-inline: 0; box-shadow: none; }
+  .mov .bar { padding: 14px 16px; min-height: 70px; }
+  .mov .cuerpo { padding: 25px 15px 62px; }
+  .mov [data-sitio] { padding: 17px; }
+  .mov [data-sitio] .card-actions { grid-template-columns: 1fr; }
+}
