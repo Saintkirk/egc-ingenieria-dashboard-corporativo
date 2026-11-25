@@ -24,7 +24,7 @@ export function initDesktopNav(currentRoute, rol = null) {
 
   desktopSide.innerHTML = `
     <a class="brand" href="index.html" aria-label="EGC Ingeniería, inicio">
-      <span class="brand-mark">${svgIcon(ICONS.mark, '')}</span><span class="brand-copy">EGC<small>INGENIERÍA</small></span>
+      <span class="brand-mark"><img src="brand/logo-egc-azul.png" alt="EGC Ingeniería"></span><span class="brand-copy">EGC<small>INGENIERÍA</small></span>
     </a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">${svgIcon(ICONS.menu)}<span>Menú</span></button>
     <nav class="primary-nav" id="primary-nav" aria-label="Navegación principal">
@@ -115,7 +115,7 @@ export function initMobileNav(currentRoute, rol = null) {
   const links = grupos.flatMap(g => g.links).filter(([archivo]) => archivo).map(([archivo, label]) => [archivo, label]);
   const role = `${etiqueta} · ${identidad}`;
 
-  mobileBar.innerHTML = `<div class="mobile-brand"><span class="brand-mark">${svgIcon(ICONS.mark, '')}</span><span>EGC <em>Ingeniería</em><small>${role} · <a href="login.html">Salir</a></small></span></div><button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu">${svgIcon(ICONS.menu, '')}<span>Secciones</span></button>`;
+  mobileBar.innerHTML = `<div class="mobile-brand"><span class="brand-mark"><img src="brand/logo-egc-azul.png" alt="EGC Ingeniería"></span><span>EGC <em>Ingeniería</em><small>${role} · <a href="login.html">Salir</a></small></span></div><button class="mobile-menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu">${svgIcon(ICONS.menu, '')}<span>Secciones</span></button>`;
 
   const menu = document.createElement('nav');
   menu.className = 'mobile-menu';
