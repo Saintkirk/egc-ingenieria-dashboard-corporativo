@@ -641,3 +641,23 @@ tr.clic:hover td { background: #f5f6fc; }
   .profile-grid { grid-template-columns: 1fr; }
   .login-panel { padding: 30px 18px; }
 }
+
+/* Login · misma marca, tipografía y jerarquía visual del dashboard */
+.login,
+.login button,
+.login a,
+.login input { font-family: "Manrope", Arial, sans-serif; }
+.login h1,
+.login h2,
+.login h3 { font-family: "Montserrat", Arial, sans-serif; }
+.login-brand { align-items: center; gap: 16px; color: var(--egc-navy); }
+.login-logo { display: block; width: clamp(128px, 13vw, 188px); height: auto; object-fit: contain; }
+.login-brand-label { padding-left: 16px; border-left: 1px solid var(--egc-line); color: var(--egc-gray); font-family: "Montserrat", Arial, sans-serif; font-size: 12px; font-weight: 700; letter-spacing: .04em; }
+.login-brand-label em { color: var(--egc-red); font-style: normal; }
+.login-story h1 { max-width: 11ch; }
+.login-story::after { opacity: .1; }
+@media (max-width: 760px) {
+  .login-brand { gap: 12px; }
+  .login-logo { width: 150px; }
+  .login-brand-label { padding-left: 12px; font-size: 11px; }
+}
