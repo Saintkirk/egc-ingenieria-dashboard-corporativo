@@ -5,24 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#0C1C8C">
   <title>Mis visitas · Terreno · EGC Ingeniería</title>
-  <script type="module" crossorigin src="/egc-ingenieria-dashboard-precision-dark/assets/app-tbuVkPpn.js"></script>
-  <link rel="stylesheet" crossorigin href="/egc-ingenieria-dashboard-precision-dark/assets/app-LseCTAHA.css">
+  <script type="module" crossorigin src="/egc-ingenieria-dashboard-precision-dark/assets/app-BQcTN45V.js"></script>
+  <link rel="stylesheet" crossorigin href="/egc-ingenieria-dashboard-precision-dark/assets/app-X7EwIpLe.css">
 </head>
 <body>
-  <div class="mov">
-    <div class="bar">Terreno · Equipo A · <a href="login.html">Salir</a></div>
+  <div class="app work-app">
+    <aside class="side"></aside>
 
-    <main class="cuerpo">
-      <h2>Mis visitas de la semana</h2>
+    <div class="main">
+      <header class="top">
+        <h1>Mis visitas de la semana</h1>
+        <div class="u">terreno.a@empresa.cl &nbsp;|&nbsp; <a href="login.html">Salir</a></div>
+      </header>
 
-      <div class="card">
-        <p class="text-sm text-muted">
-          Registra la visita (<b>Visitado</b>) y enlaza fotos e informe en Drive (<b>Informe cargado</b>).
-        </p>
-      </div>
+      <main class="content">
+        <section class="work-hero" aria-labelledby="terreno-title">
+          <div>
+            <p class="eyebrow">Operación en terreno</p>
+            <h2 id="terreno-title">Visitas asignadas a Equipo A</h2>
+            <p>Registra la visita y enlaza fotos e informe en Drive para entregar el sitio a revisión.</p>
+          </div>
+          <span class="role-badge">Terreno</span>
+        </section>
 
-      <div class="lista-sitios" data-lista></div>
-    </main>
+        <div class="card work-guidance">
+          <b>Próximo paso operativo</b>
+          <p class="text-sm text-muted">Los sitios aparecen aquí mientras están en visita programada, visitados o con informe cargado.</p>
+        </div>
+
+        <section class="work-list" data-lista aria-label="Visitas de la semana"></section>
+      </main>
+    </div>
   </div>
 
   <div class="demo">Prototipo navegable · datos ficticios · <a href="index.html"><u>Índice</u></a></div>
