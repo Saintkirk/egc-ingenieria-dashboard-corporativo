@@ -776,3 +776,11 @@ label { color: var(--egc-gray); }
   .section-toggle-icon,
   .motion-section-body { transition: none; }
 }
+
+/* Tipografía de marca única · Montserrat en toda la experiencia */
+:root { --egc-font-brand: "Montserrat", Arial, sans-serif; }
+body,
+body :where(*) { font-family: var(--egc-font-brand) !important; }
+body :where(h1, h2, h3, h4, h5, h6, p, a, button, input, select, textarea, label, small, strong, b, span, th, td, li) {
+  font-family: var(--egc-font-brand) !important;
+}
