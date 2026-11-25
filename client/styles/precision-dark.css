@@ -529,3 +529,22 @@ tr.clic:hover td { background: #f5f6fc; }
   .mov [data-sitio] { padding: 17px; }
   .mov [data-sitio] .card-actions { grid-template-columns: 1fr; }
 }
+
+/* Dibujante · el lienzo ocupa toda la pantalla, el contenido mantiene lectura cómoda */
+.mov.mov-workspace {
+  max-width: none;
+  width: 100%;
+  border-inline: 0;
+  box-shadow: none;
+}
+.mov-workspace .bar { padding-inline: clamp(18px, 4vw, 56px); }
+.mov-workspace .cuerpo {
+  width: min(100%, 1180px);
+  max-width: none;
+  margin: 0 auto;
+  padding-inline: clamp(20px, 4vw, 56px);
+}
+@media (max-width: 639px) {
+  .mov.mov-workspace { width: 100%; }
+  .mov-workspace .cuerpo { padding-inline: 15px; }
+}
