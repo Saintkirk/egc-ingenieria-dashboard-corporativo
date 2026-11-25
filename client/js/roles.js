@@ -3,6 +3,8 @@
 // en el cliente para que el prototipo muestre el mismo comportamiento.
 
 const CLAVE_ROL = 'egc-demo-rol';
+// Evita recuperar HTML antiguo sin bundle después de una publicación.
+const UI_VERSION = 'egc-20261125';
 
 // links: [archivo, etiqueta, ícono, { deshabilitado }]
 export const ROLES = {
@@ -66,6 +68,6 @@ export function resolverSesion(ruta) {
 
 // Enlaces internos: conservan el rol para que la sesión simulada sea explícita
 export function urlPara(archivo, rol, params = {}) {
-  const q = new URLSearchParams({ rol, ...params });
+  const q = new URLSearchParams({ rol, ...params, v: UI_VERSION });
   return `${archivo}?${q}`;
 }
