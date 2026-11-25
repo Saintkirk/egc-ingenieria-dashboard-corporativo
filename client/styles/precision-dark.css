@@ -787,9 +787,9 @@ body :where(h1, h2, h3, h4, h5, h6, p, a, button, input, select, textarea, label
 
 /* La marca oficial ya contiene el nombre completo: no repetir EGC Ingeniería en texto. */
 .brand { display: flex; align-items: center; }
-.brand-mark { width: 178px; height: 52px; }
+.side .brand-mark { width: 178px; height: 52px; }
 @media (max-width: 900px) {
-  .brand-mark { width: 154px; height: 46px; }
+  .side .brand-mark { width: 154px; height: 46px; }
 }
 
 /* Cabecera del índice: misma marca y lenguaje visual, sin convertirlo en el shell del dashboard. */
@@ -831,4 +831,32 @@ body :where(h1, h2, h3, h4, h5, h6, p, a, button, input, select, textarea, label
   background: #eef0fb;
   box-shadow: 0 8px 22px rgba(12, 28, 140, .12);
   outline: none;
+}
+
+/* Mobile shell: el menú queda anclado al viewport y la identidad no se recorta. */
+@media (max-width: 900px) {
+  .side { width: 100%; min-width: 0; grid-template-columns: minmax(0, 1fr) auto; align-items: center; }
+  .side .brand-mark { width: 154px; height: 46px; }
+  .side-bottom { display: none; }
+  .primary-nav { width: 100%; }
+  .primary-nav-inner { display: block; width: 100%; }
+  .primary-nav .nav-label { padding: 12px 4px 7px; text-align: left; }
+  .primary-nav .nav-group { width: 100%; }
+  .primary-nav .nav-group-toggle,
+  .primary-nav .nav-link { width: 100%; justify-content: flex-start; text-align: left; }
+  .primary-nav .nav-links { display: grid; grid-template-columns: 1fr; gap: 4px; }
+}
+
+/* Encabezado posterior al ingreso: correo, separador y salida con jerarquía estable. */
+.top .u { min-width: 0; }
+.top .user-email { overflow-wrap: anywhere; }
+.top .user-divider { color: #b8bfdc; }
+.top .user-exit { flex: 0 0 auto; white-space: nowrap; }
+@media (max-width: 639px) {
+  .top { align-items: flex-start; flex-wrap: wrap; gap: 5px 12px; }
+  .top h1 { flex: 1 1 100%; }
+  .top .u { width: 100%; justify-content: flex-start; flex-wrap: wrap; gap: 4px 8px; line-height: 1.35; }
+  .top .user-email { max-width: calc(100% - 52px); }
+  .top .user-divider { display: none; }
+  .top .user-exit { padding-left: 8px; border-left: 1px solid #b8bfdc; }
 }
