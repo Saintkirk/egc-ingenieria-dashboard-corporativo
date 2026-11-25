@@ -860,3 +860,19 @@ body :where(h1, h2, h3, h4, h5, h6, p, a, button, input, select, textarea, label
   .top .user-divider { display: none; }
   .top .user-exit { padding-left: 8px; border-left: 1px solid #b8bfdc; }
 }
+
+/* KPIs del panel: cada estado mantiene el mismo eje visual, incluso con etiquetas largas. */
+.kpis .kpi {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+}
+.kpis .kpi b { width: 100%; text-align: center; }
+.kpis .kpi .chip {
+  max-width: 100%;
+  justify-content: center;
+  text-align: center;
+  white-space: normal;
+}
