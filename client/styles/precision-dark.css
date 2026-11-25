@@ -600,3 +600,44 @@ tr.clic:hover td { background: #f5f6fc; }
   .work-list { grid-template-columns: 1fr; }
   .work-list .card-actions { grid-template-columns: 1fr; }
 }
+
+/* Acceso profesional por perfiles */
+.login-panel { align-items: flex-start; overflow: auto; }
+.login-box { width: min(100%, 760px); padding-block: 18px; }
+.login-heading { margin-bottom: 24px; }
+.login-kicker, .profile-kicker {
+  display: block;
+  color: var(--egc-red);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.login-heading h2 { margin-top: 8px; }
+.login-heading p { max-width: 58ch; }
+.profile-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.profile-card {
+  display: flex;
+  min-height: 250px;
+  flex-direction: column;
+  padding: 18px;
+  border: 1px solid var(--egc-line);
+  border-radius: 5px;
+  background: #fff;
+  box-shadow: var(--sombra-card);
+  transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+}
+.profile-card:hover { border-color: #aeb5d4; box-shadow: 0 12px 28px rgba(3, 12, 16, .1); transform: translateY(-2px); }
+.profile-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.profile-card h3 { margin: 6px 0 0; color: var(--egc-navy); font-family: "Montserrat", Arial, sans-serif; font-size: 18px; }
+.profile-initial { display: grid; width: 36px; height: 36px; place-items: center; border-radius: 50%; background: #eef0fb; color: var(--egc-blue); font-family: "Montserrat", Arial, sans-serif; font-weight: 800; }
+.profile-card > p { margin: 13px 0 12px; color: var(--egc-gray); font-size: 12px; line-height: 1.55; }
+.profile-card ul { display: grid; gap: 6px; margin: 0 0 18px; padding: 0; list-style: none; color: var(--egc-ink); font-size: 11px; }
+.profile-card li { position: relative; padding-left: 15px; }
+.profile-card li::before { position: absolute; top: .48em; left: 0; width: 6px; height: 6px; border-radius: 50%; background: var(--egc-red); content: ""; }
+.profile-card-action { margin-top: auto; text-align: center; }
+.login-note { margin-top: 20px; color: var(--egc-gray); font-size: 11px; line-height: 1.55; }
+@media (max-width: 760px) {
+  .profile-grid { grid-template-columns: 1fr; }
+  .login-panel { padding: 30px 18px; }
+}
