@@ -23,7 +23,7 @@ export function initDesktopNav(currentRoute, rol = null) {
   if (!desktopSide) return;
 
   desktopSide.innerHTML = `
-    <a class="brand" href="index.html" aria-label="EGC Ingeniería, inicio">
+    <a class="brand" href="login.html" aria-label="EGC Ingeniería, inicio de sesión">
       <span class="brand-mark"><img src="brand/logo-egc-azul.png" alt="EGC Ingeniería"></span>
     </a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">${svgIcon(ICONS.menu)}<span>Menú</span></button>
