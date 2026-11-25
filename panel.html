@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#17212d">
+  <title>Panel de sitios · EGC Ingeniería</title>
+  <script type="module" crossorigin src="/egc-ingenieria-dashboard-precision-dark/assets/app-cqA7hNAY.js"></script>
+  <link rel="stylesheet" crossorigin href="/egc-ingenieria-dashboard-precision-dark/assets/app-BTrq4vIc.css">
+</head>
+<body>
+  <div class="app">
+    <aside class="side"></aside>
+
+    <div class="main">
+      <header class="top">
+        <h1>Panel de sitios</h1>
+        <div class="u">jefe@empresa.cl &nbsp;|&nbsp; <a href="login.html">Salir</a></div>
+      </header>
+
+      <main class="content">
+        <section class="kpis" aria-label="Estados del sitio">
+          <div class="kpi"><b>3</b><span class="chip s1">Recibido</span></div>
+          <div class="kpi"><b>2</b><span class="chip s2">Visita programada</span></div>
+          <div class="kpi"><b>1</b><span class="chip s3">Visitado</span></div>
+          <div class="kpi"><b>2</b><span class="chip s4">Informe cargado</span></div>
+          <div class="kpi"><b>4</b><span class="chip s5">En dibujo</span></div>
+          <div class="kpi"><b>1</b><span class="chip s6">Plano listo</span></div>
+          <div class="kpi"><b>5</b><span class="chip s7">Entregado</span></div>
+          <div class="kpi"><b>6</b><span class="chip s8">Facturado</span></div>
+        </section>
+
+        <section class="ops-summary" aria-label="Resumen operativo">
+          <div class="summary-metric"><strong id="metric-sites">24</strong><span>sitios activos</span><small>Total de sitios en seguimiento</small></div>
+          <div class="summary-metric"><strong id="metric-states">8</strong><span>estados</span><small>Etapas del flujo operativo</small></div>
+          <div class="summary-metric summary-alert"><strong id="metric-late">2</strong><span>atrasos</span><small>Asignaciones vencidas</small></div>
+        </section>
+
+        <section class="workflow-overview" aria-labelledby="workflow-title">
+          <div class="workflow-head">
+            <h2 id="workflow-title">Flujo de operación</h2>
+            <p>Seguimiento de visitas, informes y planos</p>
+          </div>
+          <ol class="workflow-timeline">
+            <li class="is-complete"><span class="workflow-dot">01</span><strong>Recibido</strong><small>Solicitud</small></li>
+            <li class="is-complete"><span class="workflow-dot">02</span><strong>Visita programada</strong><small>Planificación</small></li>
+            <li class="is-complete"><span class="workflow-dot">03</span><strong>Visitado</strong><small>Terreno</small></li>
+            <li class="is-complete"><span class="workflow-dot">04</span><strong>Informe cargado</strong><small>Documentos</small></li>
+            <li class="is-active"><span class="workflow-dot">05</span><strong>En dibujo</strong><small>Producción</small></li>
+            <li><span class="workflow-dot">06</span><strong>Plano listo</strong><small>Control</small></li>
+            <li><span class="workflow-dot">07</span><strong>Entregado</strong><small>Cierre</small></li>
+            <li><span class="workflow-dot">08</span><strong>Facturado</strong><small>Fin del ciclo</small></li>
+          </ol>
+        </section>
+
+        <div class="card filtros">
+          <div>
+            <label for="filtro-estado">Estado</label>
+            <select id="filtro-estado" class="in">
+              <option>Todos</option>
+              <option>Recibido</option>
+              <option>Visita programada</option>
+              <option>Visitado</option>
+              <option>Informe cargado</option>
+              <option>En dibujo</option>
+              <option>Plano listo</option>
+              <option>Entregado</option>
+              <option>Facturado</option>
+            </select>
+          </div>
+          <div>
+            <label for="filtro-equipo">Equipo</label>
+            <select id="filtro-equipo" class="in">
+              <option>Todos</option>
+              <option>Equipo A</option>
+              <option>Equipo B</option>
+              <option>Contratista 1</option>
+              <option>Dibujante 2</option>
+              <option>Revisor</option>
+            </select>
+          </div>
+          <div>
+            <label for="filtro-cliente">Cliente</label>
+            <select id="filtro-cliente" class="in">
+              <option>Entel y WOM</option>
+              <option>Entel</option>
+              <option>WOM</option>
+            </select>
+          </div>
+          <div>
+            <label for="filtro-plazo">Plazo</label>
+            <select id="filtro-plazo" class="in">
+              <option>Este mes</option>
+              <option>Esta semana</option>
+              <option>Todos</option>
+            </select>
+          </div>
+          <div class="warn">2 sitios con atraso</div>
+          <a class="btn" href="asignacion.html">+ Nueva asignación</a>
+        </div>
+
+        <table class="res">
+          <thead>
+            <tr>
+              <th>Sitio</th>
+              <th>Cliente</th>
+              <th>Tipo de visita</th>
+              <th>Estado</th>
+              <th>Responsable</th>
+              <th>Plazo</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </main>
+    </div>
+  </div>
+
+  <div class="demo">Prototipo navegable · datos ficticios · <a href="index.html"><u>Índice</u></a></div>
+</body>
+</html>
