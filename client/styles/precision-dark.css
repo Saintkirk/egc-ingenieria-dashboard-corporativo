@@ -817,3 +817,18 @@ body :where(h1, h2, h3, h4, h5, h6, p, a, button, input, select, textarea, label
   .prototype-index-brand { align-items: flex-start; flex-direction: column; margin-bottom: 36px; }
   .prototype-index-brand img { width: 154px; height: 46px; }
 }
+
+/* Vistas del prototipo: azul de marca en cada acceso, sin sacrificar contraste en el texto auxiliar. */
+.prototype-index .index-link {
+  border-color: rgba(12, 28, 140, .28);
+  box-shadow: 0 6px 18px rgba(12, 28, 140, .06);
+}
+.prototype-index .index-link strong,
+.prototype-index .index-arrow { color: var(--egc-blue); }
+.prototype-index .index-link:hover,
+.prototype-index .index-link:focus-visible {
+  border-color: var(--egc-blue);
+  background: #eef0fb;
+  box-shadow: 0 8px 22px rgba(12, 28, 140, .12);
+  outline: none;
+}
