@@ -669,3 +669,11 @@ tr.clic:hover td { background: #f5f6fc; }
 .login-heading h2 { color: var(--egc-navy); font-family: "Montserrat", Arial, sans-serif; font-weight: 800; }
 .login-story-copy h1 { color: var(--egc-navy); font-family: "Montserrat", Arial, sans-serif; font-weight: 800; }
 .login-story-copy p { color: var(--egc-gray); font-family: "Manrope", Arial, sans-serif; }
+
+/* Acciones e ingreso · azul corporativo como color primario */
+.btn,
+.btn.ok { background: var(--egc-blue); color: #fff; box-shadow: 0 8px 18px rgba(12, 28, 140, .16); }
+.btn:hover,
+.btn.ok:hover { background: #081565; box-shadow: 0 10px 24px rgba(12, 28, 140, .22); }
+.btn.g { background: #fff; color: var(--egc-blue); border-color: #b8bfdc; box-shadow: none; }
+.btn.g:hover { background: #eef0fb; border-color: var(--egc-blue); }
