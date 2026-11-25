@@ -24,7 +24,7 @@ export function initDesktopNav(currentRoute, rol = null) {
 
   desktopSide.innerHTML = `
     <a class="brand" href="index.html" aria-label="EGC Ingeniería, inicio">
-      <span class="brand-mark"><img src="brand/logo-egc-azul.png" alt="EGC Ingeniería"></span><span class="brand-copy">EGC<small>INGENIERÍA</small></span>
+      <span class="brand-mark"><img src="brand/logo-egc-azul.png" alt="EGC Ingeniería"></span>
     </a>
     <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav">${svgIcon(ICONS.menu)}<span>Menú</span></button>
     <nav class="primary-nav" id="primary-nav" aria-label="Navegación principal">
@@ -32,7 +32,7 @@ export function initDesktopNav(currentRoute, rol = null) {
         <div class="nav-label">${rol ? 'Plataforma' : 'Demostración'}</div>${buildNavGroups(rol)}
       </div>
     </nav>
-    <div class="side-bottom"><strong>${rol ? ROLES[rol].etiqueta : 'Sin sesión'}</strong>Sesión de demostración · Google</div>`;
+    <div class="side-bottom"><strong>${rol ? ROLES[rol].etiqueta : 'Vista pública'}</strong>${rol ? 'Sesión de demostración · Google' : 'Prototipo navegable · datos ficticios'}</div>`;
 
   // El encabezado muestra al usuario del rol activo (antes quedaba fijo en jefe@empresa.cl)
   const usuario = document.querySelector('.top .u');

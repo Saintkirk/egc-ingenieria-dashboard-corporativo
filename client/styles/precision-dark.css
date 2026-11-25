@@ -784,3 +784,10 @@ body :where(*) { font-family: var(--egc-font-brand) !important; }
 body :where(h1, h2, h3, h4, h5, h6, p, a, button, input, select, textarea, label, small, strong, b, span, th, td, li) {
   font-family: var(--egc-font-brand) !important;
 }
+
+/* La marca oficial ya contiene el nombre completo: no repetir EGC Ingeniería en texto. */
+.brand { display: flex; align-items: center; }
+.brand-mark { width: 178px; height: 52px; }
+@media (max-width: 900px) {
+  .brand-mark { width: 154px; height: 46px; }
+}
