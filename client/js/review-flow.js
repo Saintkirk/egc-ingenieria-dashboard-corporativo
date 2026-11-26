@@ -17,11 +17,11 @@ export function initReviewFlow(rol = 'revisor') {
       const sitio = obtenerSitio(idDeFila(tr));
       const celda = tr.cells[tr.cells.length - 1];
       if (!sitio || !tr.querySelector('a.btn')) return;
-      if (sitio.estado < 3) {
+      if (sitio.estado < 6) {
         celda.innerHTML = '<span class="waiting">Devuelto a terreno</span>';
       } else if (requisitosFaltantes(sitio, ['fotografias', 'croquis', 'informe', 'plano']).length) {
         celda.innerHTML = '<span class="waiting">Esperando requisitos</span>';
-      } else if (sitio.revision?.resultado === 'aprobado') {
+      } else if (sitio.revision?.resultado === 'aprobado' || sitio.estado >= 7) {
         celda.innerHTML = `<span class="ok-texto">Aprobado ${esc(sitio.revision.fecha)}</span>`;
       }
     });

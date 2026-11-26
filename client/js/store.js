@@ -1,4 +1,5 @@
-// Estado de demostración del prototipo (sin backend).
+// Estado espejo de la demo. La fuente principal es la API persistente cuando está disponible;
+// localStorage solo permite abrir las páginas estáticas de GitHub Pages sin servidor.
 // Reglas de transición alineadas con la matriz de permisos del informe (sección 5.2) y con
 // EstadoService (PU-01): cada acción sale de un estado exacto, la ejecuta un rol permitido y,
 // para terreno y dibujante, solo sobre sitios propios. Los datos viven en localStorage del navegador.
@@ -6,8 +7,8 @@
 const CLAVE = 'egc-demo-v1';
 
 export const ESTADOS = [
-  'Recibido', 'Visita programada', 'Visitado', 'Informe cargado',
-  'En dibujo', 'Plano listo', 'Entregado', 'Facturado'
+  'Recibido', 'Visita programada', 'Visitado', 'Informe cargado', 'En dibujo',
+  'Plano listo', 'En revisión', 'Aprobado', 'Entregado', 'Facturado'
 ];
 
 // Identidad de los usuarios de demostración que tienen alcance "propios"
@@ -27,10 +28,11 @@ export const ACCIONES = [
   { id: 'programar', etiqueta: 'Programar visita', desde: 0, hacia: 1, roles: ['jefe'] },
   { id: 'visita', etiqueta: 'Registrar visita', desde: 1, hacia: 2, roles: ['jefe', 'terreno'] },
   { id: 'informe', etiqueta: 'Enlazar informe', desde: 2, hacia: 3, roles: ['jefe', 'terreno'] },
-  { id: 'dibujante', etiqueta: 'Asignar dibujante', desde: 3, hacia: 4, roles: ['jefe'], requiereRevision: true },
+  { id: 'dibujante', etiqueta: 'Asignar dibujante', desde: 3, hacia: 4, roles: ['jefe'] },
   { id: 'plano', etiqueta: 'Enlazar plano', desde: 4, hacia: 5, roles: ['jefe', 'dibujante'] },
-  { id: 'entregar', etiqueta: 'Marcar Entregado', desde: 5, hacia: 6, roles: ['jefe'] },
-  { id: 'facturar', etiqueta: 'Marcar Facturado', desde: 6, hacia: 7, roles: ['jefe'] }
+  { id: 'enviar_revision', etiqueta: 'Enviar a revisión', desde: 5, hacia: 6, roles: ['jefe'] },
+  { id: 'entregar', etiqueta: 'Marcar Entregado', desde: 7, hacia: 8, roles: ['jefe'] },
+  { id: 'facturar', etiqueta: 'Marcar Facturado', desde: 8, hacia: 9, roles: ['jefe'] }
 ];
 
 // Contadores del panel para sitios que no se listan en la tabla de la maqueta
@@ -111,6 +113,22 @@ const crearSemilla = () => {
 };
 
 let memoria = null; // respaldo si el navegador bloquea localStorage
+let apiActiva = false;
+
+export async function hidratarDesdeApi() {
+  try {
+    const respuesta = await fetch('/api/demo/snapshot', { headers: { Accept: 'application/json' } });
+    const remoto = await respuesta.json();
+    if (!respuesta.ok || !remoto.ok) return false;
+    guardar({ sitios: remoto.sitios });
+    apiActiva = true;
+    return true;
+  } catch { return false; }
+}
+
+const persistirAccion = (id, accion, rol) => fetch(`/api/demo/sites/${encodeURIComponent(id)}/actions`, {
+  method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: accion, role: rol })
+}).then(r => r.json());
 
 const leer = () => {
   try {
@@ -156,6 +174,7 @@ export const registrarSitio = ({ id, nombre }) => {
   };
   d.sitios.push(sitio);
   guardar(d);
+  if (apiActiva) void fetch('/api/demo/sites', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, nombre }) });
   return sitio;
 };
 
@@ -227,16 +246,17 @@ export const aplicarAccion = (id, accionId, rol) => {
   if (accion.id === 'informe') { delete sitio.observacion; sitio.revision = null; }
   sitio.historial.push({ fecha: hoy(), texto: verboHistorial(accion, rol, sitio), estado: accion.hacia });
   guardar(d);
+  if (apiActiva) void persistirAccion(id, accionId, rol);
   return { ok: true, sitio, desde: ESTADOS[accion.desde], hacia: ESTADOS[accion.hacia] };
 };
 
-// Revisión: aprobar no cambia de estado (habilita asignar dibujante); observar devuelve a «Visitado»
+// Revisión: solo se dictamina en «En revisión»; aprobar habilita la entrega y observar devuelve a «Observado».
 export const revisarInforme = (id, resultado, comentario = '') => {
   const d = datos();
   const sitio = d.sitios.find(s => s.id === id);
   if (!sitio) return { ok: false, error: 'Sitio inexistente.' };
-  if (sitio.estado !== 3) {
-    return { ok: false, error: `Solo se revisa un informe en «${ESTADOS[3]}»; el sitio está en «${ESTADOS[sitio.estado]}».` };
+  if (sitio.estado !== 6) {
+    return { ok: false, error: `Solo se revisa un plano en «${ESTADOS[6]}»; el sitio está en «${ESTADOS[sitio.estado]}».` };
   }
   const faltantes = requisitosFaltantes(sitio, ['fotografias', 'croquis', 'informe', 'plano']);
   if (faltantes.length) {
@@ -248,10 +268,12 @@ export const revisarInforme = (id, resultado, comentario = '') => {
 
   if (resultado === 'aprobar') {
     sitio.revision = { resultado: 'aprobado', fecha: hoy() };
+    sitio.estado = 7;
     sitio.responsable = 'Jefe de área';
-    sitio.historial.push({ fecha: hoy(), texto: 'Revisor aprobó el informe', estado: null });
+    sitio.historial.push({ fecha: hoy(), texto: 'Revisor aprobó el plano', estado: 7 });
     guardar(d);
-    return { ok: true, sitio, desde: ESTADOS[3], hacia: ESTADOS[3] };
+    if (apiActiva) void fetch(`/api/demo/sites/${encodeURIComponent(id)}/review`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ role: 'revisor', resultado, comment: comentario }) });
+    return { ok: true, sitio, desde: ESTADOS[6], hacia: ESTADOS[7] };
   }
 
   sitio.revision = { resultado: 'observado', fecha: hoy() };
@@ -260,7 +282,8 @@ export const revisarInforme = (id, resultado, comentario = '') => {
   sitio.responsable = sitio.equipo;
   sitio.historial.push({ fecha: hoy(), texto: 'Revisor observó el informe', estado: 2 });
   guardar(d);
-  return { ok: true, sitio, desde: ESTADOS[3], hacia: ESTADOS[2] };
+  if (apiActiva) void fetch(`/api/demo/sites/${encodeURIComponent(id)}/review`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ role: 'revisor', resultado, comment: comentario }) });
+  return { ok: true, sitio, desde: ESTADOS[6], hacia: ESTADOS[2] };
 };
 
 // Contadores del panel: base fija de la maqueta + diferencias de los sitios listados

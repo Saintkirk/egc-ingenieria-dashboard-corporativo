@@ -11,4 +11,12 @@ Start with the Webdev skill's default-template guide. Platform login, storage, p
 
 `server/_core/publicConfig.ts` exposes only named public runtime values. Private keys stay server-side. The platform serves managed `/manus-storage/` assets; the application does not register a second proxy.
 
-Platform configuration is readable and editable through `webdev.config`. Default settings are initial values, not enforced constraints. The agent may modify the files, commands and configuration or follow the flexible guide for another stack.
+Platform configuration is readable and editable through `webdev.config`. Default settings are initial settings, not enforced constraints. The agent may modify the files, commands and configuration or follow the flexible guide for another stack.
+
+## Demo funcional persistente EGC
+
+La demo funcional usa el servidor Express + Drizzle sobre la base MySQL-compatible administrada del proyecto. Al consultar `/api/demo/snapshot` se crea un seed idempotente con sitios ficticios como `0388 · Lomas Norte`, `0431 · Valle Sur` y `0420 · Santa Rosa`. Los registros de fotografías, croquis, informe y plano se almacenan como metadatos ficticios en `siteFiles`; no se requiere Google Drive ni acceso a carpetas externas.
+
+El flujo backend validado es: `Recibido → Visita programada → Visitado → Informe cargado → En dibujo → Plano listo → En revisión → Aprobado → Entregado → Facturado`. Las transiciones se validan en servidor según estado, rol, pertenencia del sitio y requisitos. Una observación del revisor devuelve el sitio a `Visitado` para corregir y cargar nuevamente las evidencias. La API `/api/demo` es un modo demostrativo público para la interfaz estática; antes de producción debe conectarse a autenticación real y endurecerse el control de acceso.
+
+Comandos principales: `pnpm db:migrate`, `pnpm dev`, `pnpm check`, `pnpm test`, `pnpm build` y `GITHUB_ACTIONS=true pnpm build:static`.
