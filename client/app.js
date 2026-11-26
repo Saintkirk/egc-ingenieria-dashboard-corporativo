@@ -9,6 +9,7 @@ import { resolverSesion, ROLES, urlPara } from './js/roles.js';
 import { mostrarAccesoDenegado } from './js/ui.js';
 import { reiniciarDemo, hidratarDesdeApi } from './js/store.js';
 import { initSectionMotion } from './js/section-motion.js';
+import { initMapFlow } from './js/map-flow.js';
 
 const currentRoute = location.pathname.split('/').pop() || 'index.html';
 
@@ -37,6 +38,7 @@ const ROUTE_HANDLERS = {
 
 if (sesion.permitido) {
   ROUTE_HANDLERS[currentRoute]?.(sesion.rol);
+  if (currentRoute === 'panel.html' && sesion.rol === 'jefe') void initMapFlow();
 } else {
   const rol = ROLES[sesion.rol];
   const pantalla = document.title.split('·')[0].trim();

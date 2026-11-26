@@ -1,4 +1,4 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { double, int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
 
 /**
  * Core user table backing auth flow.
@@ -32,6 +32,10 @@ export const sites = mysqlTable("sites", {
   cliente: varchar("cliente", { length: 80 }).notNull(),
   tipo: varchar("tipo", { length: 60 }).notNull(),
   comuna: varchar("comuna", { length: 80 }).notNull(),
+  latitud: double("latitud").notNull().default(0),
+  longitud: double("longitud").notNull().default(0),
+  elevacion: int("elevacion").notNull().default(0),
+  visitaProgramada: varchar("visitaProgramada", { length: 10 }),
   plazo: varchar("plazo", { length: 10 }).notNull(),
   estado: varchar("estado", { length: 24 }).notNull().default("recibido"),
   equipo: varchar("equipo", { length: 60 }).notNull(),

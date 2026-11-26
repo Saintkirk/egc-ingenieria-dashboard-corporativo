@@ -6,6 +6,7 @@
   <meta name="theme-color" content="#0C1C8C">
   <title>Panel de sitios · EGC Ingeniería</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <script type="module" src="app.js"></script>
 </head>
 <body>
@@ -34,6 +35,15 @@
           <div class="summary-metric"><strong id="metric-sites">24</strong><span>sitios activos</span><small>Total de sitios en seguimiento</small></div>
           <div class="summary-metric"><strong id="metric-states">8</strong><span>estados</span><small>Etapas del flujo operativo</small></div>
           <div class="summary-metric summary-alert"><strong id="metric-late">2</strong><span>atrasos</span><small>Asignaciones vencidas</small></div>
+        </section>
+
+        <section class="geo-overview" aria-labelledby="geo-title">
+          <div class="geo-head">
+            <div><span class="eyebrow">Control territorial</span><h2 id="geo-title">Mapa de sitios y condiciones de visita</h2><p>Selecciona una antena para revisar ubicación, elevación y pronóstico de su visita agendada.</p></div>
+            <div class="geo-legend" aria-label="Leyenda de avance"><span><i class="legend-dot status-1"></i>Inicio</span><span><i class="legend-dot status-3"></i>Terreno</span><span><i class="legend-dot status-5"></i>Producción</span><span><i class="legend-dot status-7"></i>Revisión</span><span><i class="legend-dot status-9"></i>Cierre</span></div>
+          </div>
+          <div class="geo-layout"><div id="sites-map" role="application" aria-label="Mapa de sitios EGC Ingeniería"></div><aside id="geo-detail-panel" aria-live="polite"><div class="map-empty">Selecciona un punto para ver su detalle.</div></aside></div>
+          <p class="geo-source">Pronóstico consultado desde Open-Meteo · mapa base OpenStreetMap. La aptitud es una recomendación operativa; el jefe debe validar las condiciones de seguridad antes de movilizar al equipo.</p>
         </section>
 
         <section class="workflow-overview" aria-labelledby="workflow-title">
