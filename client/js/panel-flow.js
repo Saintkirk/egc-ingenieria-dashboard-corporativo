@@ -12,8 +12,8 @@ function renderizarPanel(rol) {
     const siguiente = accionSiguiente(s);
     const bloqueo = siguiente ? motivoBloqueo(rol, s, siguiente) : null;
     const avance = siguiente
-      ? `<div class="advance-next"><b>${esc(siguiente.etiqueta)}</b><small class="table-gate ${bloqueo ? 'is-blocked' : 'is-ready'}">${bloqueo ? esc(bloqueo) : 'Listo para avanzar'}</small></div>`
-      : '<div class="advance-next"><small class="table-gate">Ciclo completo</small></div>';
+      ? `<div class="advance-next"><span class="advance-label">Próxima acción</span><strong>${esc(siguiente.etiqueta)}</strong><small class="table-gate ${bloqueo ? 'is-blocked' : 'is-ready'}">${bloqueo ? esc(bloqueo) : 'Listo para avanzar'}</small></div>`
+      : '<div class="advance-next"><span class="advance-label">Estado</span><strong>Ciclo completo</strong></div>';
     return `
             <tr class="clic" data-sitio="${esc(s.id)}">
               <td><b>${esc(s.id)}</b> · ${esc(s.nombre)}</td>
@@ -21,7 +21,7 @@ function renderizarPanel(rol) {
               <td>${esc(s.tipo)}</td>
               <td>${chip(s.estado)}</td>
               <td>${esc(s.responsable)}</td>
-              <td class="advance-cell"><div class="advance-count"><b>${completos}/6</b><small class="text-muted">requisitos completos</small></div>${avance}</td>
+              <td class="advance-cell"><div class="advance-count"><strong>${completos}/6</strong><span>Requisitos completos</span></div>${avance}</td>
               <td>${s.atraso ? `<span class="late">Plazo ${s.plazo.slice(0, 5)} atraso</span>` : `Plazo ${s.plazo.slice(0, 5)}`}</td>
             </tr>`;
   }).join('');
