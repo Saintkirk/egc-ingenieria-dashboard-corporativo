@@ -1,0 +1,62 @@
+[
+  {
+    "id": "0412",
+    "nombre": "Cerro Alegre",
+    "cliente": "Entel",
+    "tipo": "Proyección",
+    "comuna": "Valparaíso · Valparaíso",
+    "estado": 1,
+    "latitud": -33.0458,
+    "longitud": -71.6197,
+    "elevacion": 118,
+    "visitaProgramada": "2026-11-28"
+  },
+  {
+    "id": "0388",
+    "nombre": "Lomas Norte",
+    "cliente": "WOM",
+    "tipo": "Levantamiento estructural",
+    "comuna": "Quilicura · Metropolitana",
+    "estado": 3,
+    "latitud": -33.3662,
+    "longitud": -70.7351,
+    "elevacion": 612,
+    "visitaProgramada": "2026-11-27"
+  },
+  {
+    "id": "0431",
+    "nombre": "Valle Sur",
+    "cliente": "Entel",
+    "tipo": "Levantamiento fotográfico",
+    "comuna": "Maipú · Metropolitana",
+    "estado": 4,
+    "latitud": -33.5104,
+    "longitud": -70.7528,
+    "elevacion": 486,
+    "visitaProgramada": "2026-11-30"
+  },
+  {
+    "id": "0377",
+    "nombre": "Pampa Alta",
+    "cliente": "WOM",
+    "tipo": "Proyección",
+    "comuna": "Calama · Antofagasta",
+    "estado": 2,
+    "latitud": -22.4544,
+    "longitud": -68.9294,
+    "elevacion": 2260,
+    "visitaProgramada": "2026-11-26"
+  },
+  {
+    "id": "0420",
+    "nombre": "Santa Rosa",
+    "cliente": "Entel",
+    "tipo": "Levantamiento estructural",
+    "comuna": "La Granja · Metropolitana",
+    "estado": 0,
+    "latitud": -33.5319,
+    "longitud": -70.6287,
+    "elevacion": 570,
+    "visitaProgramada": "2026-12-02"
+  }
+]
