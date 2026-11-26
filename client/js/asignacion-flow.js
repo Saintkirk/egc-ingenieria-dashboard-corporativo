@@ -9,6 +9,7 @@ export function initAsignacionFlow(rol = 'jefe') {
   const form = document.getElementById('form-asignacion');
   const codigo = document.getElementById('codigo');
   const nombre = document.getElementById('nombre');
+  const plazo = document.getElementById('plazo');
   const aviso = document.getElementById('aviso-duplicado');
   const guardar = document.getElementById('guardar');
   if (!form || !codigo || !aviso) return;
@@ -43,13 +44,13 @@ export function initAsignacionFlow(rol = 'jefe') {
 
   form.addEventListener('submit', e => {
     e.preventDefault();
-    if (!normalizar(codigo.value) || !nombre.value.trim()) {
-      mostrar('Completa el código Subtel y el nombre del sitio para guardar.', 'error');
-      (normalizar(codigo.value) ? nombre : codigo).focus();
+    if (!normalizar(codigo.value) || !nombre.value.trim() || !plazo?.value) {
+      mostrar('Completa el código Subtel, el nombre y el plazo objetivo para guardar.', 'error');
+      (normalizar(codigo.value) ? (nombre.value.trim() ? plazo : nombre) : codigo).focus();
       return;
     }
     if (!validar()) { codigo.focus(); return; }
-    const sitio = registrarSitio({ id: normalizar(codigo.value), nombre: nombre.value.trim() });
+    const sitio = registrarSitio({ id: normalizar(codigo.value), nombre: nombre.value.trim(), plazo: plazo.value });
     location.href = urlPara('panel.html', rol, { nuevo: sitio.id });
   });
 

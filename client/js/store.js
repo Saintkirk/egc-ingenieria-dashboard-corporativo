@@ -207,17 +207,23 @@ export const buscarExistente = id => {
   return fuera ? { nombre: fuera.nombre, estado: ESTADOS[fuera.estado] } : null;
 };
 
-export const registrarSitio = ({ id, nombre }) => {
+const plazoLegible = fecha => {
+  const [yyyy, mm, dd] = String(fecha || '').split('-');
+  return yyyy && mm && dd ? `${dd}-${mm}-${yyyy}` : '05-12-2026';
+};
+
+export const registrarSitio = ({ id, nombre, plazo }) => {
   const d = datos();
+  const fechaObjetivo = plazo || '2026-12-05';
   const sitio = {
     id, nombre, cliente: 'Entel', tipo: 'Levantamiento estructural', comuna: 'Puente Alto · Metropolitana',
-    plazo: '05-12-2026', estado: 0, equipo: 'Equipo A', responsable: 'Jefe de área', dibujante: null,
+    plazo: plazoLegible(fechaObjetivo), visitaProgramada: fechaObjetivo, estado: 0, equipo: 'Equipo A', responsable: 'Jefe de área', dibujante: null,
     revision: null, atraso: false,
     historial: [{ fecha: hoy(), texto: 'Jefe registró la asignación', estado: 0 }]
   };
   d.sitios.push(sitio);
   guardar(d);
-  if (apiActiva) void fetch('/api/demo/sites', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, nombre }) });
+  if (apiActiva) void fetch('/api/demo/sites', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ id, nombre, plazo: fechaObjetivo }) });
   return sitio;
 };
 
