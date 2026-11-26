@@ -7,7 +7,7 @@ import { initTerrenoFlow, initDibujanteFlow } from './js/mobile-flow.js';
 import { initLoginFlow } from './js/login-flow.js';
 import { resolverSesion, ROLES, urlPara } from './js/roles.js';
 import { mostrarAccesoDenegado } from './js/ui.js';
-import { reiniciarDemo } from './js/store.js';
+import { reiniciarDemo, hidratarDesdeApi } from './js/store.js';
 import { initSectionMotion } from './js/section-motion.js';
 
 const currentRoute = location.pathname.split('/').pop() || 'index.html';
@@ -16,6 +16,10 @@ const currentRoute = location.pathname.split('/').pop() || 'index.html';
 const sesion = resolverSesion(currentRoute);
 
 if (currentRoute === 'login.html') initLoginFlow();
+
+// La demo intenta primero la persistencia real; si GitHub Pages no tiene servidor,
+// conserva el respaldo estático local explícitamente como modo sin conexión.
+await hidratarDesdeApi();
 
 // 1. Capa de interfaz global (el menú depende del rol)
 initDesktopNav(currentRoute, sesion.rol);

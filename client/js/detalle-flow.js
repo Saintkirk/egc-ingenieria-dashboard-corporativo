@@ -35,10 +35,10 @@ const datosHtml = sitio => {
     ${sitio.observacion ? `<p class="mt-1"><b>Observación del revisor:</b> ${esc(sitio.observacion)}</p>` : ''}
     ${checklistHtml(sitio)}
 
-    <b class="mt-3" style="display:block">Enlaces a Drive</b>
-    <p class="mt-1">Fotos y croquis — ${informe ? `enlace registrado por ${esc(sitio.equipo)}` : 'pendiente de enlazar'}</p>
-    <p class="mt-1">Informe de visita — ${informe ? `enlace registrado por ${esc(sitio.equipo)}` : 'pendiente de enlazar'}</p>
-    <p class="mt-1">Plano — ${plano ? `enlace registrado por ${esc(sitio.dibujante ?? ACTORES.dibujante)}` : 'pendiente de enlazar'}</p>`;
+    <b class="mt-3" style="display:block">Archivos de demostración persistidos</b>
+    <p class="mt-1">Fotos y croquis — ${informe ? `registro creado por ${esc(sitio.equipo)}` : 'pendiente de cargar'}</p>
+    <p class="mt-1">Informe de visita — ${informe ? `registro creado por ${esc(sitio.equipo)}` : 'pendiente de cargar'}</p>
+    <p class="mt-1">Plano — ${plano ? `registro creado por ${esc(sitio.dibujante ?? ACTORES.dibujante)}` : 'pendiente de cargar'}</p>`;
 };
 
 const historialHtml = sitio => [...sitio.historial].reverse().map((h, i) =>
@@ -70,7 +70,7 @@ const accionesHtml = (rol, sitio) => {
     <b class="mt-3" style="display:block">Acciones disponibles para tu rol (${esc(etiqueta)})</b>
     ${principal}
     <div class="flex gap-2 mt-2 flex-wrap">
-      <button class="btn g" type="button" data-drive>Ver en Drive</button>
+      <button class="btn g" type="button" data-drive>Ver archivos registrados</button>
       <a class="btn g" href="${urlPara(inicio, rol)}">${rol === 'jefe' ? 'Volver al panel' : 'Volver a mi inicio'}</a>
     </div>`;
 };
@@ -107,7 +107,7 @@ export function initDetalleFlow(rol) {
       avisoTransicion(r, etiqueta);
     });
     document.querySelector('[data-drive]')?.addEventListener('click', () => mostrarAviso({
-      titulo: 'Enlace a Drive', texto: 'Aquí se abriría la carpeta del sitio en Google Drive.', detalle: 'Prototipo: sin conexión real a Drive'
+      titulo: 'Archivos del sitio', texto: 'Los archivos de demostración se representan como registros persistidos en la base de datos.', detalle: 'No se requiere Google Drive'
     }));
   };
   pintar();
