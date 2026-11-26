@@ -109,6 +109,14 @@ const crearSemilla = () => {
   // El historial de 0431 se conserva tal como lo muestra el informe (incluye la aprobación del revisor)
   const valle = sitios.find(s => s.id === '0431');
   valle.historial.splice(4, 0, { fecha: '21-11', texto: 'Revisor aprobó el informe', estado: null });
+  const geodata = {
+    '0412': [-33.0458, -71.6197, 118, '2026-11-28'],
+    '0388': [-33.3662, -70.7351, 612, '2026-11-27'],
+    '0431': [-33.5104, -70.7528, 486, '2026-11-30'],
+    '0377': [-22.4544, -68.9294, 2260, '2026-11-26'],
+    '0420': [-33.5319, -70.6287, 570, '2026-12-02']
+  };
+  sitios.forEach(s => { const [latitud, longitud, elevacion, visitaProgramada] = geodata[s.id] ?? []; Object.assign(s, { latitud, longitud, elevacion, visitaProgramada }); });
   return { sitios };
 };
 

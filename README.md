@@ -20,3 +20,9 @@ La demo funcional usa el servidor Express + Drizzle sobre la base MySQL-compatib
 El flujo backend validado es: `Recibido → Visita programada → Visitado → Informe cargado → En dibujo → Plano listo → En revisión → Aprobado → Entregado → Facturado`. Las transiciones se validan en servidor según estado, rol, pertenencia del sitio y requisitos. Una observación del revisor devuelve el sitio a `Visitado` para corregir y cargar nuevamente las evidencias. La API `/api/demo` es un modo demostrativo público para la interfaz estática; antes de producción debe conectarse a autenticación real y endurecerse el control de acceso.
 
 Comandos principales: `pnpm db:migrate`, `pnpm dev`, `pnpm check`, `pnpm test`, `pnpm build` y `GITHUB_ACTIONS=true pnpm build:static`.
+
+## Mapa operativo y clima
+
+El Panel de sitios incorpora un mapa Leaflet con puntos geolocalizados por antena. El color del punto representa el tramo de avance del sitio. Al seleccionar un punto se muestran coordenadas, elevación, fecha programada y una ficha climatológica para esa fecha. La recomendación considera código meteorológico WMO, probabilidad de precipitación y viento máximo; si las condiciones no son convenientes, el jefe puede reagendar la visita desde la misma ficha y la nueva fecha queda registrada en `sites.visitaProgramada` y `siteHistory`.
+
+El mapa base usa OpenStreetMap con atribución visible y el pronóstico diario usa Open-Meteo sin clave para esta demo. Para operación productiva deberán revisarse las políticas y límites de los proveedores, además de definir umbrales de seguridad aprobados por prevención de riesgos.
