@@ -1,23 +1,28 @@
 // Vistas móviles de Terreno y Dibujante: tarjetas por sitio propio con la acción que su rol puede ejecutar.
 import { ESTADOS, ACTORES, listarSitios, accionSiguiente, motivoBloqueo, aplicarAccion } from './store.js';
 import { ROLES, urlPara } from './roles.js';
-import { esc, chip, avisoTransicion, avisoRechazo } from './ui.js';
+import { esc, chip, checklistHtml, avisoTransicion, avisoRechazo } from './ui.js';
 
 const metaHtml = s => `${esc(s.cliente)} · ${esc(s.tipo)} · Plazo ${s.plazo.slice(0, 5)}`;
 
 function tarjeta(s, rol) {
   const siguiente = accionSiguiente(s);
-  const puede = siguiente?.roles.includes(rol) && !motivoBloqueo(rol, s, siguiente);
+  const autorizado = Boolean(siguiente?.roles.includes(rol));
+  const bloqueo = autorizado ? motivoBloqueo(rol, s, siguiente) : null;
+  const puede = autorizado && !bloqueo;
   const nota = s.observacion
     ? `<p class="text-sm text-muted mt-1">Observación del revisor: ${esc(s.observacion)}</p>`
     : '';
-  const sinAccion = puede ? '' : `<p class="text-sm text-muted mt-1">${
+  const sinAccion = bloqueo
+    ? `<p class="flow-blocked text-sm mt-1"><b>Avance bloqueado:</b> ${esc(bloqueo)}</p>`
+    : puede ? '' : `<p class="text-sm text-muted mt-1">${
     s.estado === 5 ? 'Plano enlazado. El jefe de área registra la entrega.' : 'En revisión: sin acciones pendientes para ti.'}</p>`;
-  const acciones = `<div class="card-actions">${puede ? `<button class="btn" type="button" data-accion="${siguiente.id}">${esc(siguiente.etiqueta)}</button>` : ''}<a class="btn g" href="${urlPara('detalle.html', rol, { sitio: s.id })}">Ver detalle</a></div>`;
+  const acciones = `<div class="card-actions">${puede ? `<button class="btn" type="button" data-accion="${siguiente.id}">${esc(siguiente.etiqueta)}</button>` : bloqueo ? `<button class="btn" type="button" disabled>${esc(siguiente.etiqueta)}</button>` : ''}<a class="btn g" href="${urlPara('detalle.html', rol, { sitio: s.id })}">Ver detalle</a></div>`;
   return `
       <article class="card" data-sitio="${esc(s.id)}">
         <div class="card-heading"><b>${esc(s.id)} · ${esc(s.nombre)}</b>${chip(s.estado)}</div>
         <p class="text-sm text-muted mt-1">${metaHtml(s)}</p>
+        ${checklistHtml(s, rol === 'terreno' ? 'Evidencias para entregar a revisión' : 'Requisitos de producción')}
         ${nota}${sinAccion}
         ${acciones}
       </article>`;

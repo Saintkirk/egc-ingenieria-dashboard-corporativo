@@ -13,6 +13,15 @@ export const ESTADOS = [
 // Identidad de los usuarios de demostración que tienen alcance "propios"
 export const ACTORES = { terreno: 'Equipo A', dibujante: 'Dibujante 2' };
 
+export const REQUISITOS = [
+  { id: 'fotografias', etiqueta: 'Fotografías de terreno' },
+  { id: 'croquis', etiqueta: 'Croquis de terreno' },
+  { id: 'informe', etiqueta: 'Informe de visita' },
+  { id: 'dibujante', etiqueta: 'Dibujante asignado' },
+  { id: 'plano', etiqueta: 'Plano final enlazado' },
+  { id: 'revision', etiqueta: 'Dictamen del revisor aprobado' }
+];
+
 // desde / hacia son índices de ESTADOS
 export const ACCIONES = [
   { id: 'programar', etiqueta: 'Programar visita', desde: 0, hacia: 1, roles: ['jefe'] },
@@ -46,6 +55,31 @@ const textoHistorial = (estado, s) => [
   'Jefe marcó Facturado'
 ][estado];
 
+export const requisitosSitio = sitio => {
+  const evidencias = sitio.evidencias ?? {};
+  return {
+    fotografias: evidencias.fotografias ?? sitio.estado >= 3,
+    croquis: evidencias.croquis ?? sitio.estado >= 3,
+    informe: evidencias.informe ?? sitio.estado >= 3,
+    dibujante: Boolean(sitio.dibujante),
+    plano: evidencias.plano ?? sitio.estado >= 5,
+    revision: sitio.revision?.resultado === 'aprobado'
+  };
+};
+
+export const requisitosFaltantes = (sitio, ids = Object.keys(requisitosSitio(sitio))) => {
+  const completos = requisitosSitio(sitio);
+  return REQUISITOS.filter(r => ids.includes(r.id) && !completos[r.id]).map(r => r.etiqueta);
+};
+
+const requisitosPorAccion = {
+  informe: ['fotografias', 'croquis', 'informe'],
+  dibujante: ['fotografias', 'croquis', 'informe', 'revision'],
+  plano: ['dibujante'],
+  entregar: ['fotografias', 'croquis', 'informe', 'dibujante', 'plano', 'revision'],
+  facturar: ['revision']
+};
+
 const conHistorial = s => {
   s.historial = Array.from({ length: s.estado + 1 }, (_, i) => ({
     fecha: FECHAS_SEMILLA[i], texto: textoHistorial(i, s), estado: i
@@ -58,10 +92,12 @@ const crearSemilla = () => {
     { id: '0412', nombre: 'Cerro Alegre', cliente: 'Entel', tipo: 'Proyección', comuna: 'Valparaíso · Valparaíso',
       plazo: '28-11-2026', estado: 1, equipo: 'Equipo A', responsable: 'Equipo A', dibujante: null, revision: null, atraso: false },
     { id: '0388', nombre: 'Lomas Norte', cliente: 'WOM', tipo: 'Levantamiento estructural', comuna: 'Quilicura · Metropolitana',
-      plazo: '25-11-2026', estado: 3, equipo: 'Equipo A', responsable: 'Revisor', dibujante: null, revision: null, atraso: true },
+      plazo: '25-11-2026', estado: 3, equipo: 'Equipo A', responsable: 'Revisor', dibujante: null, revision: null,
+      evidencias: { fotografias: true, croquis: true, informe: true, plano: false }, atraso: true },
     { id: '0431', nombre: 'Valle Sur', cliente: 'Entel', tipo: 'Levantamiento fotográfico', comuna: 'Maipú · Metropolitana',
       plazo: '30-11-2026', estado: 4, equipo: 'Equipo B', responsable: 'Dibujante 2', dibujante: 'Dibujante 2',
-      revision: { resultado: 'aprobado', fecha: '21-11' }, atraso: false },
+      revision: { resultado: 'aprobado', fecha: '21-11' },
+      evidencias: { fotografias: true, croquis: true, informe: true, plano: false }, atraso: false },
     { id: '0377', nombre: 'Pampa Alta', cliente: 'WOM', tipo: 'Proyección', comuna: 'Calama · Antofagasta',
       plazo: '24-11-2026', estado: 2, equipo: 'Contratista 1', responsable: 'Contratista 1', dibujante: null, revision: null, atraso: true },
     { id: '0420', nombre: 'Santa Rosa', cliente: 'Entel', tipo: 'Levantamiento estructural', comuna: 'La Granja · Metropolitana',
@@ -141,8 +177,9 @@ export const motivoBloqueo = (rol, sitio, accion) => {
       ? `El sitio pertenece a ${sitio.equipo}, no a tu equipo.`
       : 'El sitio no está asignado a ti.';
   }
-  if (accion.requiereRevision && sitio.revision?.resultado !== 'aprobado') {
-    return 'Falta la aprobación del revisor.';
+  const faltantes = requisitosFaltantes(sitio, requisitosPorAccion[accion.id] ?? []);
+  if (faltantes.length) {
+    return `Acción bloqueada: falta${faltantes.length > 1 ? 'n' : ''} ${faltantes.join(', ')}.`;
   }
   return null;
 };
@@ -177,6 +214,12 @@ export const aplicarAccion = (id, accionId, rol) => {
   if (error) return { ok: false, error };
 
   if (accion.id === 'dibujante') sitio.dibujante = ACTORES.dibujante;
+  if (accion.id === 'informe') {
+    sitio.evidencias = { ...(sitio.evidencias ?? {}), fotografias: true, croquis: true, informe: true };
+  }
+  if (accion.id === 'plano') {
+    sitio.evidencias = { ...(sitio.evidencias ?? {}), plano: true };
+  }
   sitio.estado = accion.hacia;
   sitio.responsable = responsableTras(accion.hacia, sitio);
   if (accion.hacia >= 6) sitio.atraso = false;
@@ -194,6 +237,10 @@ export const revisarInforme = (id, resultado, comentario = '') => {
   if (!sitio) return { ok: false, error: 'Sitio inexistente.' };
   if (sitio.estado !== 3) {
     return { ok: false, error: `Solo se revisa un informe en «${ESTADOS[3]}»; el sitio está en «${ESTADOS[sitio.estado]}».` };
+  }
+  const faltantes = requisitosFaltantes(sitio, ['fotografias', 'croquis', 'informe', 'plano']);
+  if (faltantes.length) {
+    return { ok: false, error: `No se puede revisar: falta${faltantes.length > 1 ? 'n' : ''} ${faltantes.join(', ')}.` };
   }
   if (sitio.revision?.resultado === 'aprobado') {
     return { ok: false, error: `El informe ya fue aprobado el ${sitio.revision.fecha}.` };

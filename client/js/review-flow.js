@@ -1,6 +1,6 @@
-import { obtenerSitio, revisarInforme } from './store.js';
+import { obtenerSitio, revisarInforme, requisitosFaltantes } from './store.js';
 import { ROLES } from './roles.js';
-import { avisoTransicion, avisoRechazo, esc } from './ui.js';
+import { avisoTransicion, avisoRechazo, checklistHtml, esc } from './ui.js';
 
 export function initReviewFlow(rol = 'revisor') {
   const reviewHeadingSpan = document.querySelector('#resultado-revision b + span');
@@ -19,6 +19,8 @@ export function initReviewFlow(rol = 'revisor') {
       if (!sitio || !tr.querySelector('a.btn')) return;
       if (sitio.estado < 3) {
         celda.innerHTML = '<span class="waiting">Devuelto a terreno</span>';
+      } else if (requisitosFaltantes(sitio, ['fotografias', 'croquis', 'informe', 'plano']).length) {
+        celda.innerHTML = '<span class="waiting">Esperando requisitos</span>';
       } else if (sitio.revision?.resultado === 'aprobado') {
         celda.innerHTML = `<span class="ok-texto">Aprobado ${esc(sitio.revision.fecha)}</span>`;
       }
@@ -68,10 +70,15 @@ export function initReviewFlow(rol = 'revisor') {
     tr.classList.add('is-selected-review');
 
     reviewHeadingSpan.textContent = `(sitio ${siteText})`;
+    const sitio = obtenerSitio(siteText.match(/\d{4}/)?.[0]);
+    const faltantes = sitio ? requisitosFaltantes(sitio, ['fotografias', 'croquis', 'informe', 'plano']) : [];
     summaryEl.innerHTML =
       `<b>Cargado para revisión:</b> sitio ${siteText} (${clientText}). ` +
       `Documentación disponible: ${formatContentLower(contentText)} (${completionText}). ` +
-      `Revisa los antecedentes y selecciona <b>Aprobar</b> o <b>Registrar observación</b>.`;
+      (faltantes.length
+        ? `<span class="flow-blocked"><b>Dictamen bloqueado:</b> falta${faltantes.length > 1 ? 'n' : ''} ${esc(faltantes.join(', '))}.</span>`
+        : 'Revisa los antecedentes y selecciona <b>Aprobar</b> o <b>Registrar observación</b>.') +
+      (sitio ? checklistHtml(sitio, 'Requisitos antes del dictamen') : '');
 
     feedbackEl.style.display = 'none';
     feedbackEl.textContent = '';

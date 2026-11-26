@@ -1,11 +1,21 @@
 // Utilidades de interfaz compartidas: escape de texto, chips de estado y avisos de transición.
-import { ESTADOS } from './store.js';
+import { ESTADOS, REQUISITOS, requisitosSitio } from './store.js';
 
 export const esc = texto => String(texto).replace(/[&<>"']/g, c => (
   { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
 ));
 
 export const chip = estado => `<span class="chip s${estado + 1}">${ESTADOS[estado]}</span>`;
+
+export const checklistHtml = (sitio, titulo = 'Requisitos de avance') => {
+  const completos = requisitosSitio(sitio);
+  return `<section class="requirements" aria-label="${esc(titulo)}">
+    <div class="requirements-head"><b>${esc(titulo)}</b><span>${Object.values(completos).filter(Boolean).length}/${REQUISITOS.length} completos</span></div>
+    <ul class="requirements-list">${REQUISITOS.map(item => `<li class="requirement ${completos[item.id] ? 'is-complete' : 'is-pending'}">
+      <span class="requirement-mark" aria-hidden="true">${completos[item.id] ? '✓' : '—'}</span><span>${esc(item.etiqueta)}</span>
+    </li>`).join('')}</ul>
+  </section>`;
+};
 
 let temporizador;
 

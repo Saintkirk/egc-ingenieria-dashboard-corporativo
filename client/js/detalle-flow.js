@@ -3,7 +3,7 @@ import {
   ESTADOS, ACTORES, listarSitios, obtenerSitio, accionSiguiente, motivoBloqueo, esPropio, aplicarAccion
 } from './store.js';
 import { ROLES, urlPara } from './roles.js';
-import { esc, avisoTransicion, avisoRechazo, mostrarAviso, mostrarAccesoDenegado } from './ui.js';
+import { esc, checklistHtml, avisoTransicion, avisoRechazo, mostrarAviso, mostrarAccesoDenegado } from './ui.js';
 
 const sitioPorDefecto = rol => {
   if (rol === 'terreno' || rol === 'dibujante') return listarSitios().find(s => esPropio(rol, s))?.id;
@@ -33,6 +33,7 @@ const datosHtml = sitio => {
     <p class="mt-1"><b>Revisión:</b> ${esc(revision)}</p>
     <p class="mt-1"><b>Dibujante:</b> ${esc(sitio.dibujante ?? 'Sin asignar')}</p>
     ${sitio.observacion ? `<p class="mt-1"><b>Observación del revisor:</b> ${esc(sitio.observacion)}</p>` : ''}
+    ${checklistHtml(sitio)}
 
     <b class="mt-3" style="display:block">Enlaces a Drive</b>
     <p class="mt-1">Fotos y croquis — ${informe ? `enlace registrado por ${esc(sitio.equipo)}` : 'pendiente de enlazar'}</p>

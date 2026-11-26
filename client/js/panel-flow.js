@@ -1,4 +1,4 @@
-import { listarSitios, contarPorEstado } from './store.js';
+import { listarSitios, contarPorEstado, accionSiguiente, motivoBloqueo, requisitosSitio } from './store.js';
 import { urlPara } from './roles.js';
 import { chip, esc, mostrarAviso } from './ui.js';
 
@@ -6,15 +6,25 @@ import { chip, esc, mostrarAviso } from './ui.js';
 function renderizarPanel(rol) {
   const tbody = document.querySelector('table.res tbody');
   if (!tbody) return;
-  tbody.innerHTML = listarSitios().map(s => `
+  tbody.innerHTML = listarSitios().map(s => {
+    const requisitos = requisitosSitio(s);
+    const completos = Object.values(requisitos).filter(Boolean).length;
+    const siguiente = accionSiguiente(s);
+    const bloqueo = siguiente ? motivoBloqueo(rol, s, siguiente) : null;
+    const avance = siguiente
+      ? `<b>${esc(siguiente.etiqueta)}</b><small class="table-gate ${bloqueo ? 'is-blocked' : 'is-ready'}">${bloqueo ? esc(bloqueo) : 'Listo para avanzar'}</small>`
+      : '<small class="table-gate">Ciclo completo</small>';
+    return `
             <tr class="clic" data-sitio="${esc(s.id)}">
               <td><b>${esc(s.id)}</b> · ${esc(s.nombre)}</td>
               <td>${esc(s.cliente)}</td>
               <td>${esc(s.tipo)}</td>
               <td>${chip(s.estado)}</td>
               <td>${esc(s.responsable)}</td>
+              <td><b>${completos}/6</b> <small class="text-muted">requisitos</small>${avance}</td>
               <td>${s.atraso ? `<span class="late">Plazo ${s.plazo.slice(0, 5)} atraso</span>` : `Plazo ${s.plazo.slice(0, 5)}`}</td>
-            </tr>`).join('');
+            </tr>`;
+  }).join('');
   tbody.querySelectorAll('tr.clic').forEach(tr => {
     const ir = () => { location.href = urlPara('detalle.html', rol, { sitio: tr.dataset.sitio }); };
     tr.addEventListener('click', ir);
