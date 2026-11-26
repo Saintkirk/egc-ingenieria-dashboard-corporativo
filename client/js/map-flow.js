@@ -38,7 +38,8 @@ async function pronostico(site) {
 }
 
 const markerHtml = site => `<span class="geo-marker ${colorEstado(site.estado)}" aria-label="${esc(site.id)}"></span>`;
-const detalleBase = site => `<div class="geo-detail"><div class="geo-detail-head"><div><strong>${esc(site.id)} · ${esc(site.nombre)}</strong><small>${esc(site.comuna)}</small></div><span class="chip s${Math.min(site.estado + 1, 8)}">${esc(ESTADOS[site.estado])}</span></div><div class="geo-facts"><span><b>Coordenadas</b>${Number(site.latitud).toFixed(5)}, ${Number(site.longitud).toFixed(5)}</span><span><b>Elevación</b>${site.elevacion ?? '—'} m s. n. m.</span><span><b>Visita agendada</b>${fechaLegible(site.visitaProgramada)}</span></div><div class="geo-weather" data-weather><span class="weather-loading">Consultando pronóstico para la visita…</span></div><button class="btn g geo-reschedule" type="button">Reagendar visita</button></div>`;
+const fechaMinima = () => new Date().toISOString().slice(0, 10);
+const detalleBase = site => `<div class="geo-detail"><div class="geo-detail-head"><div><strong>${esc(site.id)} · ${esc(site.nombre)}</strong><small>${esc(site.comuna)}</small></div><span class="chip s${Math.min(site.estado + 1, 8)}">${esc(ESTADOS[site.estado])}</span></div><div class="geo-facts"><span><b>Coordenadas</b>${Number(site.latitud).toFixed(5)}, ${Number(site.longitud).toFixed(5)}</span><span><b>Elevación</b>${site.elevacion ?? '—'} m s. n. m.</span><span><b>Visita agendada</b>${fechaLegible(site.visitaProgramada)}</span></div><div class="geo-weather" data-weather><span class="weather-loading">Consultando pronóstico para la visita…</span></div><label class="geo-date-label" for="geo-reschedule-date">Nueva fecha de visita</label><div class="geo-reschedule-form"><input class="in geo-date" id="geo-reschedule-date" type="date" value="${esc(site.visitaProgramada || '')}" min="${fechaMinima()}" aria-label="Nueva fecha de visita"><button class="btn g geo-reschedule" type="button">Reagendar visita</button></div></div>`;
 
 async function seleccionar(site, panel, marker) {
   seleccionado = site;
@@ -51,8 +52,12 @@ async function seleccionar(site, panel, marker) {
     weatherEl.innerHTML = `<div class="weather-status ${status.clase}"><strong>${status.label}</strong><span>${esc(status.texto)}</span></div><div class="weather-grid"><span><b>${wmo(forecast.code)}</b>Condición</span><span><b>${forecast.probabilidad ?? 0}%</b>Prob. lluvia</span><span><b>${forecast.min}° / ${forecast.max}°</b>Temperatura</span><span><b>${forecast.viento} km/h</b>Viento máximo</span></div>`;
   } catch (error) { weatherEl.innerHTML = `<div class="weather-status weather-warn"><strong>Pronóstico no disponible</strong><span>${esc(error.message)}</span></div>`; }
   panel.querySelector('.geo-reschedule')?.addEventListener('click', async () => {
-    const nueva = window.prompt('Nueva fecha de visita (AAAA-MM-DD):', site.visitaProgramada || '');
-    if (!nueva || !/^\d{4}-\d{2}-\d{2}$/.test(nueva)) return;
+    const dateInput = panel.querySelector('.geo-date');
+    const nueva = dateInput?.value || '';
+    if (!nueva || !/^\d{4}-\d{2}-\d{2}$/.test(nueva)) {
+      dateInput?.focus();
+      return;
+    }
     let persistencia = 'local';
     try {
       const response = await fetch(`/api/demo/sites/${encodeURIComponent(site.id)}/reschedule`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ fecha: nueva }) });
