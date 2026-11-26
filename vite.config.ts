@@ -163,6 +163,7 @@ function vitePluginPublicPlatformConfig(): Plugin {
       });
     },
     generateBundle() {
+      if (process.env.GITHUB_ACTIONS === "true") return;
       this.emitFile({ type: "asset", fileName: "api/platform/config.js", source: publicPlatformScript() });
     },
   };

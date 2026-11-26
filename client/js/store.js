@@ -123,16 +123,51 @@ const crearSemilla = () => {
 let memoria = null; // respaldo si el navegador bloquea localStorage
 let apiActiva = false;
 
+const cargarGeodataEstatico = async () => {
+  const base = import.meta.env.BASE_URL || '/';
+  const respuesta = await fetch(`${base}data/sites.json`, { cache: 'no-store' });
+  if (!respuesta.ok) throw new Error('No se pudo cargar el dataset estático.');
+  const sitios = await respuesta.json();
+  if (!Array.isArray(sitios) || !sitios.length) throw new Error('El dataset estático está vacío.');
+  return sitios;
+};
+
+const combinarGeodata = (sitios, geodata) => {
+  const porId = new Map(geodata.map(sitio => [sitio.id, sitio]));
+  return sitios.map(sitio => {
+    const geo = porId.get(sitio.id);
+    return geo ? { ...sitio, ...geo } : sitio;
+  });
+};
+
 export async function hidratarDesdeApi() {
   try {
     const respuesta = await fetch('/api/demo/snapshot', { headers: { Accept: 'application/json' } });
     const remoto = await respuesta.json();
-    if (!respuesta.ok || !remoto.ok) return false;
-    guardar({ sitios: remoto.sitios });
-    apiActiva = true;
-    return true;
-  } catch { return false; }
+    if (respuesta.ok && remoto.ok && Array.isArray(remoto.sitios) && remoto.sitios.length) {
+      guardar({ sitios: remoto.sitios });
+      apiActiva = true;
+      return true;
+    }
+  } catch { /* GitHub Pages no tiene backend; continúa con el fallback. */ }
+  try {
+    const geodata = await cargarGeodataEstatico();
+    guardar({ sitios: combinarGeodata(crearSemilla().sitios, geodata) });
+  } catch {
+    guardar(crearSemilla());
+  }
+  apiActiva = false;
+  return false;
 }
+
+export const reagendarSitioLocal = (id, fecha) => {
+  const d = datos();
+  const sitio = d.sitios.find(item => item.id === id);
+  if (!sitio) return null;
+  sitio.visitaProgramada = fecha;
+  guardar(d);
+  return sitio;
+};
 
 const persistirAccion = (id, accion, rol) => fetch(`/api/demo/sites/${encodeURIComponent(id)}/actions`, {
   method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ action: accion, role: rol })

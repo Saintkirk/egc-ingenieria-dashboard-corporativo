@@ -1,4 +1,4 @@
-import { listarSitios, ESTADOS } from './store.js';
+import { listarSitios, ESTADOS, reagendarSitioLocal } from './store.js';
 import { esc } from './ui.js';
 
 const LEAFLET_CSS = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
@@ -53,7 +53,22 @@ async function seleccionar(site, panel, marker) {
   panel.querySelector('.geo-reschedule')?.addEventListener('click', async () => {
     const nueva = window.prompt('Nueva fecha de visita (AAAA-MM-DD):', site.visitaProgramada || '');
     if (!nueva || !/^\d{4}-\d{2}-\d{2}$/.test(nueva)) return;
-    try { const response = await fetch(`/api/demo/sites/${encodeURIComponent(site.id)}/reschedule`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ fecha: nueva }) }); const result = await response.json(); if (response.ok && result.ok) Object.assign(site, result.sitio); else site.visitaProgramada = nueva; } catch { site.visitaProgramada = nueva; }
+    let persistencia = 'local';
+    try {
+      const response = await fetch(`/api/demo/sites/${encodeURIComponent(site.id)}/reschedule`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ fecha: nueva }) });
+      const result = await response.json();
+      if (response.ok && result.ok) {
+        Object.assign(site, result.sitio);
+        persistencia = 'servidor';
+      } else {
+        Object.assign(site, reagendarSitioLocal(site.id, nueva));
+      }
+    } catch {
+      Object.assign(site, reagendarSitioLocal(site.id, nueva));
+    }
+    window.alert(persistencia === 'servidor'
+      ? 'Visita reagendada y persistida en el servidor.'
+      : 'Visita reagendada en esta demo y guardada localmente en este navegador.');
     await seleccionar(site, panel, marker);
   });
 }
