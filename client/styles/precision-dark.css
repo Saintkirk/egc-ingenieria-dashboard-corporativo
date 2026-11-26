@@ -887,10 +887,17 @@ body :where(h1, h2, h3, h4, h5, h6, p, a, button, input, select, textarea, label
 .requirement.is-complete .requirement-mark { background: #e2f2ea; color: #23724f; }
 .requirement.is-pending .requirement-mark { background: #f8f1e5; color: #98621d; }
 .flow-blocked { display: block; margin-top: 7px; padding: 8px 10px; border-left: 3px solid #b98537; background: #fbf6ed; color: #76501b; border-radius: 3px; }
-.table-gate { display: block; margin-top: 4px; line-height: 1.35; }
+.advance-cell { min-width: 220px; padding: 14px 16px; }
+.advance-count { display: flex; align-items: baseline; gap: 6px; padding-bottom: 9px; border-bottom: 1px solid var(--egc-line); }
+.advance-count b { color: var(--egc-navy); font-size: 16px; line-height: 1; font-variant-numeric: tabular-nums; }
+.advance-count .text-muted { color: var(--egc-gray); font-size: 10px; letter-spacing: .02em; }
+.advance-next { display: grid; gap: 3px; padding-top: 9px; }
+.advance-next > b { color: var(--egc-navy); font-size: 12px; line-height: 1.25; }
+.table-gate { display: block; margin-top: 0; line-height: 1.4; font-size: 10px; }
 .table-gate.is-ready { color: #23724f; }
 .table-gate.is-blocked { color: #98621d; }
 .review-site-summary .requirements { margin-top: 10px; }
 @media (max-width: 760px) {
   .requirements-list { grid-template-columns: 1fr; }
+  .advance-cell { min-width: 0; }
 }
